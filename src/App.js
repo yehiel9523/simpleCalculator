@@ -68,7 +68,7 @@ function App() {
   const theme = useContext(Context);
   return (
     <ContextComponnent>{
-      isShabbat(new Date()) ? <h1>shabbat</h1> :
+      isShabbat(new Date(2021, 7, 20, 20, 0, 0)) ? <h1>shabbat</h1> :
         <div className="App" style={{ background: theme.background, color: theme.foreground }}>
           <div className="calculator">
             <Screen scrArr={screen} />
