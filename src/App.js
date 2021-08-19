@@ -1,10 +1,16 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Screen from './Screen';
 import Button from './Button';
 import OparatorButton from './OperatorButton';
 import EqButton from './EqButton';
 import ClearButton from './ClearButton';
+import React from 'react';
+import ContextComponnent, { Context } from './Context';
+import { isShabbat } from 'shabbatpackage';
+
+
+
 function App() {
   const [screen, setScreen] = useState([]);
   const [eq, setEq] = useState(false);
@@ -59,23 +65,27 @@ function App() {
     }
     return res;
   }
-
+  const theme = useContext(Context);
   return (
-    <div className="App">
-      <div className="calculator">
-        <Screen scrArr={screen} />
-        {
-          buttons()
-        }
-        <OparatorButton id='+' on={setS} scr={screen} />
-        <OparatorButton id='-' on={setS} scr={screen} />
-        <OparatorButton id='*' on={setS} scr={screen} />
-        <OparatorButton id='/' on={setS} scr={screen} />
-        <EqButton id='=' on={setS} eq={setEq} toggle={!eq} scr={screen} />
-        <ClearButton id='c' on={clearS} />
-      </div>
-    </div>
-  );
+    <ContextComponnent>{
+      isShabbat(new Date()) ? <h1>shabbat</h1> :
+        <div className="App" style={{ background: theme.background, color: theme.foreground }}>
+          <div className="calculator">
+            <Screen scrArr={screen} />
+            {
+              buttons()
+            }
+            <OparatorButton id='+' on={setS} scr={screen} />
+            <OparatorButton id='-' on={setS} scr={screen} />
+            <OparatorButton id='*' on={setS} scr={screen} />
+            <OparatorButton id='/' on={setS} scr={screen} />
+            <EqButton id='=' on={setS} eq={setEq} toggle={!eq} scr={screen} />
+            <ClearButton id='c' on={clearS} />
+          </div>
+        </div>}
+    </ContextComponnent>
+  )
 }
+
 
 export default App;
